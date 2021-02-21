@@ -1,28 +1,31 @@
 <template lang="html">
 
   <section class="carrito">
-    <div>{{agregar}}
+    <div :agregar="obtenerArrayCarrito">
+    
     </div>
   </section>
 
 </template>
 
 <script lang="js">
-import novprod from './novprod.vue'
 
   export default  {
     name: 'carrito',
-    props: ['agregar'],
+    props: [],
     mounted () {
 
     },
     data () {
       return {
-        
+        nuevoArrayCarrito:[]
       }
     },
     methods: {
- 
+      obtenerArrayCarrito:function(array){
+        this.nuevoArrayCarrito=array;
+        console.log(array)
+      }
     },
     computed: {
 
