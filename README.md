@@ -1,5 +1,7 @@
 # repositorio-tienda
 
+En => https://juandemarr.github.io/tienda-vuecli/
+
 ## Project setup
 ```
 npm install
