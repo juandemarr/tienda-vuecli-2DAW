@@ -1,0 +1,105 @@
+.novprod{
+    font-size:fontsize(sm);
+    
+    & h2{
+        margin:5% 0 3%;
+    }
+    & .cards{
+        @include flexposition(space-around, center);
+        
+        & .card{
+            @include flexposition(space-between, center);
+            padding:1rem;
+            width: 15rem;
+            overflow:hidden;
+            height:22rem;
+            margin-bottom:1rem;
+
+            @include response(md){
+                height:21rem;
+            }
+            @include response(sm){
+                height:20rem;
+                width:13rem;
+            }
+            & img{
+                cursor:pointer;
+            }
+            & .card-body{
+                @include flexposition(flex-end, flex-start);
+                flex-direction:column;
+                width:100%;
+
+                & > h5{
+                    cursor:pointer;
+                }
+            }
+        & .modal-body{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            & img{
+                width:20rem;
+                margin-bottom:1rem;
+            }
+            & p{
+                font-size:fontsize(md);
+            }
+        }
+            
+        }
+
+        @include  response(sm){
+            flex-direction:column;
+        }
+    }
+
+    & .productos{
+        @include flexposition(flex-start,center);
+        flex-flow: row wrap;
+        @include response(md){
+            @include flexposition(center, center);
+        }
+        & .card{
+            width:10rem;
+            height:17rem;
+            margin:0 1rem 1rem 0;
+            @include response(lg){
+                width:9rem;
+                height:16rem;
+            }
+            @include response(sm){
+               
+                margin:0 0.5rem 0.5rem 0;
+                width:8rem;
+                height:15rem;
+            }
+            & img{
+                width:75%;
+                @include response(sm){
+                    width:70%;
+                }
+            }
+            & .card-body{
+                & h5{
+                    font-size:fontsize(xs);
+                }
+                & a{
+                    padding:0.1rem 0.3rem;
+                    font-size:fontsize(xs);
+                }
+                
+            }
+
+            &-modal-body{
+                & p:nth-child(2){
+                    text-align:left;
+                }
+            }
+            
+        }
+        
+        
+    }
+   
+}

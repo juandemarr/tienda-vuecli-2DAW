@@ -1,0 +1,25 @@
+.login{
+    border:2px solid color(primary);
+    border-radius:10px;
+    width:30%;
+    margin:4% auto;
+    /* height:20rem; */
+    padding:2rem;
+    
+
+    & h2{
+        text-align:center;
+        margin:0.5rem auto 1.5rem;
+    }
+
+    & form{
+        & div{
+            margin-bottom:5%;
+
+            & input{
+                margin-left:0.5rem;
+                width:90%
+            }
+        }
+    }
+}

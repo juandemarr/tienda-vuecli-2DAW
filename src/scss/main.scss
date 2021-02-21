@@ -1,0 +1,10 @@
+/*Aqui se importan todos los archivos scss, los cuales tienen que empezar por _    */
+@import "abstract/_mixing.scss";
+@import "abstract/_variables.scss";
+
+@import "layout/_base.scss";
+@import "layout/_cabecera.scss";
+@import "layout/_novprod.scss";
+@import "layout/_pie.scss";
+@import "layout/_login.scss";
+@import "layout/_carrito.scss";

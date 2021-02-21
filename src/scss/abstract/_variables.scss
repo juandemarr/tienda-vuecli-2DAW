@@ -1,0 +1,25 @@
+/*paleta de colores*/
+$colors: (
+    primary: darken(rgba(245, 65, 0, 0.9),7%),
+    secondary: #f0f0f0,
+    tertiary: #2e2e2e,
+    hover:lighten(rgba(255, 68, 0, 0.931),37%),
+    blank:#fff
+);
+/*función q devuelve color*/
+@function color ($color-name){
+    @return map-get($colors, $color-name);
+}
+
+/*tamaños fuente*/
+$font-sizes:(
+    xl:1.7rem,
+    lg:1.4rem,
+    md:1.1rem,
+    sm:1rem,
+    xs:0.9rem
+);
+/*función que devuelve un tamaño*/ 
+@function fontsize($size){
+    @return map-get($font-sizes, $size);
+}

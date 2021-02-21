@@ -1,0 +1,33 @@
+/*responsive*/
+@mixin response($breakpoint){//para mobile first seria al reves el orden y con min-width
+    @if($breakpoint == xl){
+        @media(max-width:1200px){
+            @content;//@content incluye las reglas que se pongan al llamarse con @include
+        }
+    }
+
+    @if($breakpoint == lg){
+        @media(max-width:992px){
+            @content;
+        }
+    }
+
+    @if($breakpoint == md){
+        @media(max-width:768px){
+            @content;
+        }
+    }
+
+    @if($breakpoint == sm){
+        @media(max-width:576px){
+            @content;
+        }
+    }
+}
+
+/*posicionar con flex*/
+@mixin flexposition($justifycontent:center, $alignitem:center){
+    display:flex;
+    justify-content:$justifycontent;
+    align-items:$alignitem;
+}

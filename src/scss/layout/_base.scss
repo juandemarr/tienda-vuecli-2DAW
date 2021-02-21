@@ -1,0 +1,26 @@
+*{
+    box-sizing:border-box;
+}
+#app{
+    background-color:color(secondary);
+    color:color(tertiary);
+    font-size:fontsize(md);
+    font-family:'Josefin Sans', sans-serif;
+    & h2{
+        font-size:fontsize(xl);
+    }
+    & .btn{
+        background-color:color(primary);
+        color:color(secondary);
+        border:1px solid color(primary);
+        &:hover{
+            transition:.3s ease-out;
+            background-color:color(blank);
+            color:color(primary);
+        }
+        &:focus, &.focus {
+            box-shadow:none;
+        }
+    }
+}
+

@@ -1,0 +1,36 @@
+.pie{
+    background-color:color(primary);
+    color:color(secondary);
+    @include flexposition(space-around,center);
+    padding:2rem;
+    margin-top:2rem;
+
+    @include response(md){
+        flex-direction:column;
+
+        & div{
+            width:100%;
+            text-align:center;
+            
+        }
+    }
+
+    & div:nth-child(2) p{
+        &:hover{
+            transition:.3s ease-out;
+            transform:scale(1.05);
+        }
+
+        & a{
+            color:color(secondary);
+            text-decoration:underline;
+    
+            &:hover{
+                transition:.3s ease-out;
+                color:color(hover);
+            }
+        }
+    }
+    
+
+}
