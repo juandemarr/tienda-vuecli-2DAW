@@ -77,6 +77,8 @@
 <script lang="js">
 import {db} from '../db.js'
 
+import { eventBus } from '../event-bus.js' 
+
   export default  {
     name: 'novprod',
     props: [
@@ -89,13 +91,16 @@ import {db} from '../db.js'
       return {
         listaProductos:[],
         listaCarrito:[]
+        
       }
     },
     methods: {
       agregarCarrito:function(elemento){
         this.listaCarrito.push(elemento);
-        this.$emit("agregar",this.listaCarrito);
+        eventBus.$emit('arrayCarrito', this.listaCarrito);
       }
+
+      
 
     },
     computed: {

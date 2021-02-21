@@ -1,14 +1,16 @@
 <template lang="html">
 
   <section class="carrito">
-    <div :agregar="obtenerArrayCarrito">
-    
-    </div>
+
+    {{nuevoArrayCarrito}}
+ 
+    <div></div>
   </section>
 
 </template>
 
 <script lang="js">
+import { eventBus } from '../event-bus.js' 
 
   export default  {
     name: 'carrito',
@@ -16,16 +18,23 @@
     mounted () {
 
     },
+    created(){
+      eventBus.$on('arrayCarrito', (array) => {
+        this.nuevoArrayCarrito=array;
+      })
+    },
     data () {
       return {
         nuevoArrayCarrito:[]
       }
     },
     methods: {
-      obtenerArrayCarrito:function(array){
+      /* obtenerArrayCarrito:function(array){
         this.nuevoArrayCarrito=array;
         console.log(array)
-      }
+      }, */
+
+      
     },
     computed: {
 
