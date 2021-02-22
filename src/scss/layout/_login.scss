@@ -3,9 +3,10 @@
     border-radius:10px;
     width:30%;
     margin:4% auto;
-    /* height:20rem; */
     padding:2rem;
-    
+
+    @include flexposition(center,center);
+    flex-direction:column;
 
     & h2{
         text-align:center;
@@ -13,13 +14,28 @@
     }
 
     & form{
+        @include flexposition(center, center);
+        flex-direction:column;
         & div{
-            margin-bottom:5%;
-
+            margin-bottom:1rem;
+            width:100%;
             & input{
                 margin-left:0.5rem;
-                width:90%
+                width:90%;
             }
         }
     }
+
+    & .btn{
+        margin:1rem 0 0;
+    }
+    
+    & p{
+        margin:1rem 0;
+    }
+
+    & .logginGoogle{
+        border-radius:5px;
+    }
+
 }

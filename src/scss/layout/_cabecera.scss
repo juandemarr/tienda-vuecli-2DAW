@@ -1,15 +1,18 @@
 .cabecera{
     background-color:color(primary);
-    
+    & li{
+        margin-right:1rem;
+    }
     & a{
         color:color(secondary)!important;
         &:hover{
             transition:.3s ease-out;
             color:color(hover)!important;
             text-decoration:none;
-                
+                    
         }
     }
+    
     & li{
         &:hover{
             transition:.3s ease-out;
