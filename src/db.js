@@ -73,6 +73,7 @@ export default {
       var errorCode = error.code;
       console.log(errorCode);
       var errorMessage = error.message;
+      console.log(errorMessage);
       return errorMessage;
     });
   }

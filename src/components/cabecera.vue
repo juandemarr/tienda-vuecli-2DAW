@@ -11,17 +11,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <li class="nav-item authenticated">
             <!-- <a class="nav-link" href="#/login">Iniciar Sesion</a> -->
-            <div >
-              
-            </div>
-            <a v-if="authenticated">{{user.data.email}}</a>
+            <a class="authenticated" v-if="authenticated">{{user.data.email}}</a>
             <router-link to="/login" v-if="!authenticated">Iniciar sesion</router-link>
           </li>
           <li class="nav-item">
             <!-- <a class="nav-link" href="#">Registrarse</a> -->
-            <a @click="logout" v-if="authenticated">Cerrar sesion</a>
+            <a class="logout" @click="logout" v-if="authenticated">Cerrar sesion</a>
             <router-link to="/#" v-if="!authenticated">Registrarse</router-link>
           </li>
           <li class="nav-item">

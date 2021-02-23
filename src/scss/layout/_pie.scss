@@ -16,11 +16,6 @@
     }
 
     & div:nth-child(2) p{
-        &:hover{
-            transition:.3s ease-out;
-            transform:scale(1.05);
-        }
-
         & a{
             color:color(secondary);
             text-decoration:underline;

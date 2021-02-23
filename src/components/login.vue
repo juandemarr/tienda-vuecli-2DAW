@@ -10,14 +10,14 @@
       <div>
         <label for="password">Contraseña: </label>
         <input type="password" id="password" v-model="password">
-        <p>Usuario o contraseña incorrecta</p>
+        <p :error="firebase.loginCorreo(email,password)" v-if="error">Usuario o contraseña incorrecta</p>
       </div>
       <button class="btn" @click='iniciarCorreo(email,password)'>Iniciar sesion</button>
       <button class="btn" @click='registro(email,password)'>Registrarse</button>
     </form>
 
     <p>Inicar sesión con:</p>
-    <button class="logginGoogle" @click="login"><i class="fab fa-google"></i></button>
+    <button class="loginGoogle" @click="login"><i class="fab fa-google"></i></button>
   </section>
 
 </template>
@@ -29,7 +29,7 @@ import firebase from '../db.js'
 
   export default  {
     name: 'login',
-    props: [],
+    props: ['error'],
     
     data () {
       return {
@@ -38,8 +38,7 @@ import firebase from '../db.js'
           data: {}
         },
         email:"",
-        password:"",
-        error:""
+        password:""
       }
       
     },
@@ -56,6 +55,7 @@ import firebase from '../db.js'
           this.user.data = {};
         }
       })
+      
 
     },
 
@@ -76,7 +76,7 @@ import firebase from '../db.js'
     computed: {
       authenticated(){
           return this.user.loggedIn
-      }
+      },
       /* firstName(){
         if (this.user.data.displayName) {
           return this.user.data.displayName.split(' ')[0]
