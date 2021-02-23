@@ -10,6 +10,7 @@
       <div>
         <label for="password">Contraseña: </label>
         <input type="password" id="password" v-model="password">
+        <p>Usuario o contraseña incorrecta</p>
       </div>
       <button class="btn" @click='iniciarCorreo(email,password)'>Iniciar sesion</button>
       <button class="btn" @click='registro(email,password)'>Registrarse</button>
@@ -38,6 +39,7 @@ import firebase from '../db.js'
         },
         email:"",
         password:"",
+        error:""
       }
       
     },
@@ -47,6 +49,7 @@ import firebase from '../db.js'
         if (user) {
           this.user.loggedIn = true;
           this.user.data = user;
+          this.$router.push('/');
         }
         else {
           this.user.loggedIn = false;
@@ -60,16 +63,10 @@ import firebase from '../db.js'
     methods: {
       login:function(){
         firebase.login();
-        /* if(this.authenticated)
-          this.$router.push('/'); */
       },
 
       registro:function(email,password){
-        //console.log("antes de enviar: "+email +" " +password);
         firebase.registrarseBD(email,password);
-          if(this.authenticated){
-            this.$router.push('/');
-          }
       },
 
       iniciarCorreo:function(email,password){
