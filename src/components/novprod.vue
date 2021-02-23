@@ -9,7 +9,8 @@
         <img :src="novedad.src" class="card-img-top" :alt="novedad.nombre" data-toggle="modal" :data-target="novedad.target">
         <div class="card-body p-0">
           <h5 class="card-title" data-toggle="modal" :data-target="novedad.target">{{novedad.nombre}}</h5>
-          <a class="btn btn-primary">Add cart</a>
+          <a v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(novedad)">Añadir <i class="fas fa-shopping-cart"></i></a>
+          <router-link to="/login" class="btn btn-primary" v-if="!authenticated">Añadir <i class="fas fa-shopping-cart"></i></router-link>
         </div>
 
         <div class="modal fade" :id="novedad.ref" tabindex="-1"  aria-hidden="true">
@@ -26,7 +27,8 @@
                 <p>{{novedad.descripcion}}</p>
               </div>
               <div class="modal-footer">
-                <a class="btn btn-primary">Add cart</a>
+                <a v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(novedad)">Añadir <i class="fas fa-shopping-cart"></i></a>
+                <router-link to="/login" class="btn btn-primary" v-if="!authenticated">Añadir <i class="fas fa-shopping-cart"></i></router-link>
               </div>
             </div>
           </div>
@@ -43,8 +45,8 @@
         <img :src="producto.src" class="card-img-top" :alt="producto.nombre" data-toggle="modal" :data-target="producto.target">
         <div class="card-body p-0">
           <h5 class="card-title" data-toggle="modal" :data-target="producto.target">{{producto.nombre}}</h5>
-          <a class="btn btn-primary"
-            @click="agregarCarrito(producto)">Add cart</a>
+          <a v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(producto)">Añadir <i class="fas fa-shopping-cart"></i></a>
+          <router-link to="/login" class="btn btn-primary" v-if="!authenticated">Añadir <i class="fas fa-shopping-cart"></i></router-link>
         </div>
 
         <div class="modal fade" :id="producto.ref" tabindex="-1"  aria-hidden="true">
@@ -62,7 +64,8 @@
                 <p>En stock: {{producto.stock}}</p>
               </div>
               <div class="modal-footer">
-                <a  class="btn btn-primary">Add cart</a>
+                <a v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(producto)">Añadir <i class="fas fa-shopping-cart"></i></a>
+                <router-link to="/login" class="btn btn-primary" v-if="!authenticated">Añadir <i class="fas fa-shopping-cart"></i></router-link>
               </div>
             </div>
           </div>
@@ -76,8 +79,8 @@
 
 <script lang="js">
 import {db} from '../db.js'
-
-import { eventBus } from '../event-bus.js' 
+import firebase from '../db.js'
+//import { eventBus } from '../event-bus.js' 
 
   export default  {
     name: 'novprod',
@@ -85,19 +88,68 @@ import { eventBus } from '../event-bus.js'
       
     ],
     mounted () {
-
+      firebase.auth.onAuthStateChanged( user => {
+        if (user) {
+          this.user.loggedIn = true;
+          this.user.data = user;
+          // ...
+        } else {
+          this.user.loggedIn = false;
+        }
+      });
     },
+
     data () {
       return {
         listaProductos:[],
+        user: {
+          loggedIn: false,
+          data: {}
+        },
         listaCarrito:[]
-        
       }
     },
     methods: {
-      agregarCarrito:function(elemento){
+      /* agregarCarrito:function(elemento){
         this.listaCarrito.push(elemento);
         eventBus.$emit('arrayCarrito', this.listaCarrito);
+      } */
+
+      agregarCarrito:function(producto){
+
+        if(this.listaCarrito.length==0){
+          db.collection('listaCarrito').add({
+              nombre:producto.nombre,
+              imagen:producto.src,
+              cantidad:1,
+              email:this.user.data.email,
+              precio:producto.precio
+            });
+        }else{
+          for(let i=0; i<this.listaCarrito.length; i++){
+            if(producto.nombre==this.listaCarrito[i].nombre){
+              let cantidad=this.listaCarrito[i].cantidad+1;
+              let precio=this.listaCarrito[i].precio*2;
+
+              db.collection('listaCarrito').doc(this.listaCarrito[i].id).update({cantidad:cantidad,precio:precio});
+              
+            }else{
+              db.collection('listaCarrito').add({
+                nombre:producto.nombre,
+                imagen:producto.src,
+                cantidad:1,
+                email:this.user.data.email,
+                precio:producto.precio
+              });
+            }
+          }
+        }
+        this.$notify({
+          group: 'foo',
+          title: 'Ver carrito',
+          type:'success',
+          text:'Se ha añadido un elemento al carrito'
+        });
       }
 
       
@@ -116,11 +168,16 @@ import { eventBus } from '../event-bus.js'
           return !prod.novedad;
         });
         return lista;
+      },
+
+      authenticated(){
+        return this.user.loggedIn
       }
       
     },
     firestore:{
-      listaProductos:db.collection('productos')
+      listaProductos:db.collection('productos'),
+      listaCarrito:db.collection('listaCarrito')//.where("email","==",firebase.auth.currentUser ? firebase.auth.currentUser.email:"")
     }
 }
 

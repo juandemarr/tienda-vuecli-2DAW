@@ -1,0 +1,37 @@
+.carrito{
+    @include flexposition(center, flex-end);
+    flex-direction:column;
+    margin:1rem auto;
+    & > div{
+        @include flexposition(space-between, center);
+        border-bottom:1px solid color(tertiary);
+        padding:1.2rem 0;
+        width:100%;
+        & .elemento{
+            @include flexposition(flex-start,center);
+            & img{
+                width:5rem;
+                margin-right:2rem;
+
+                @include response(sm){
+                    margin-right:0;
+                }
+            }
+            & .texto{
+                & p{
+                    margin-bottom:0;
+                }
+            }
+        }
+    }
+
+    & .pieCarrito{
+        @include flexposition(space-between, center);
+        margin-top:3rem;
+        width:100%;
+        padding:0 0 0 2rem;
+        & p{
+            margin-bottom:0;
+        }
+    }
+}

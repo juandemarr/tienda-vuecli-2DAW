@@ -12,17 +12,14 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item authenticated">
-            <!-- <a class="nav-link" href="#/login">Iniciar Sesion</a> -->
             <a class="authenticated" v-if="authenticated">{{user.data.email}}</a>
             <router-link to="/login" v-if="!authenticated">Iniciar sesion</router-link>
           </li>
           <li class="nav-item">
-            <!-- <a class="nav-link" href="#">Registrarse</a> -->
             <a class="logout" @click="logout" v-if="authenticated">Cerrar sesion</a>
-            <router-link to="/#" v-if="!authenticated">Registrarse</router-link>
+            <router-link to="/login" v-if="!authenticated">Registrarse</router-link>
           </li>
           <li class="nav-item">
-            <!-- <a class="nav-link" href="#/carrito">Carrito de compra</a> -->
             <router-link to="/carrito" v-if="authenticated">Carrito de compra</router-link>
           </li>
         </ul>
@@ -65,7 +62,6 @@ import firebase from '../db.js'
     methods: {
       logout:function (){
         firebase.logout()
-        
       },
       /* recibirUsuario:function(user){
         this.nombreUsuario=user.data.email;

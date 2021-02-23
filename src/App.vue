@@ -5,6 +5,7 @@
       <router-view></router-view>
     </transition>
     <pie/>
+    <notifications group="foo"/>
   </div>
 </template>
 

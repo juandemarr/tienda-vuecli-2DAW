@@ -10,7 +10,6 @@
       <div>
         <label for="password">Contraseña: </label>
         <input type="password" id="password" v-model="password">
-        <p :error="firebase.loginCorreo(email,password)" v-if="error">Usuario o contraseña incorrecta</p>
       </div>
       <button class="btn" @click='iniciarCorreo(email,password)'>Iniciar sesion</button>
       <button class="btn" @click='registro(email,password)'>Registrarse</button>
@@ -23,13 +22,12 @@
 </template>
 
 <script lang="js">
-/* import {db}  from '../db.js'; */
-/*para el logeo*/
+
 import firebase from '../db.js'
 
   export default  {
     name: 'login',
-    props: ['error'],
+    props: [],
     
     data () {
       return {
@@ -48,7 +46,7 @@ import firebase from '../db.js'
         if (user) {
           this.user.loggedIn = true;
           this.user.data = user;
-          this.$router.push('/');
+          this.$router.push("/");
         }
         else {
           this.user.loggedIn = false;
@@ -56,7 +54,6 @@ import firebase from '../db.js'
         }
       })
       
-
     },
 
     
@@ -77,12 +74,6 @@ import firebase from '../db.js'
       authenticated(){
           return this.user.loggedIn
       },
-      /* firstName(){
-        if (this.user.data.displayName) {
-          return this.user.data.displayName.split(' ')[0]
-        }
-        return null
-      } */
     }
     
 }
