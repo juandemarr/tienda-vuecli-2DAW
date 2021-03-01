@@ -8,6 +8,15 @@
     @include flexposition(center,center);
     flex-direction:column;
 
+    @include response(lg){
+        width:40%;
+    }
+    @include response(md){
+        width:55%;
+    }    
+    @include response(sm){
+        width:80%;
+    }
     & h2{
         text-align:center;
         margin:0.5rem auto 1.5rem;

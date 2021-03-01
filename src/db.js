@@ -30,7 +30,7 @@ db.settings({ timestampsInSnapshots: true })
 /*Para el logeo*/
 export default {
   auth: firebase.auth(),
-  
+
   login() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
@@ -77,23 +77,7 @@ export default {
       console.log(errorCode);
       errorMessageLogin = error.message;
       console.log(errorMessageLogin);
-      //return errorMessage;
+      
     });
-  },
-
-  /*obtenerUsuario(){
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        var uid = user.uid;
-        // ...
-      } else {
-        // User is signed out
-        // ...
-      }
-    });
-  }*/
+  }
 }
-/* 
-export {errorMessageLogin}; */

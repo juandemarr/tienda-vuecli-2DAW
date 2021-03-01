@@ -35,8 +35,10 @@ import {db} from '../db.js'
         if (user) {
           this.user.loggedIn = true;
           this.user.data = user;
+          this.$bind('listaCarrito',db.collection('listaCarrito').where("email","==",firebase.auth.currentUser ? firebase.auth.currentUser.email : ""))
         } else {
           this.user.loggedIn = false;
+          this.$bind('listaCarrito',db.collection('listaCarrito').where("email","==", ""))
         }
       });
     },
@@ -47,7 +49,8 @@ import {db} from '../db.js'
           loggedIn: false,
           data: {}
         },
-        listaCarrito:[]
+        listaCarrito:[],
+        listaProductos:[]
       }
       
     },
@@ -56,7 +59,7 @@ import {db} from '../db.js'
       restarUno:function(cantidadTotal,precioTotal, id){
         let nuevaCantidad,nuevoPrecio;
 
-        if(cantidadTotal>0){
+        if(cantidadTotal>1){
           nuevaCantidad=cantidadTotal-1;
           nuevoPrecio=precioTotal/2;
           db.collection('listaCarrito').doc(id).update({cantidad:nuevaCantidad,precio:nuevoPrecio});
@@ -73,12 +76,26 @@ import {db} from '../db.js'
       },
       comprarTodo:function(){
         if(this.listaCarrito.length>0){
-          db.collection('listaCarrito').delete();
+        let idProducto;
+        
+          for(let i=0; i<this.listaCarrito.length; i++){
+
+            for(let j=0; j<this.listaProductos.length; j++){
+              if(this.listaCarrito[i].nombre == this.listaProductos[j].nombre){
+                idProducto=this.listaProductos[j].id;
+              }
+            }
+            
+            let nuevoStock=db.collection('listaProductos').doc(idProducto).stock  - 1;
+
+            db.collection('listaProductos').doc(idProducto).update({stock:nuevoStock});//no funciona
+            db.collection('listaCarrito').doc(this.listaCarrito[i].id).delete();
+          }
           this.$notify({
             group: 'foo',
-            title: 'Carrito vacio',
+            title: 'Compra exitosa',
             type:'success',
-            text:'Se ha comprado todo el carrito'
+            text:'Carrito vacio. Compra realizada con exito'
           });
         }
       }
@@ -94,7 +111,8 @@ import {db} from '../db.js'
       }
     },
     firestore:{
-      listaCarrito:db.collection('listaCarrito')//.where("email","==",firebase.auth.currentUser ? firebase.auth.currentUser.email:"")
+      listaProductos:db.collection('productos'),
+      listaCarrito:db.collection('listaCarrito').where("email","==",firebase.auth.currentUser ? firebase.auth.currentUser.email : "")
     }
 }
 

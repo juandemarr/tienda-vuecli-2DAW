@@ -11,8 +11,8 @@
         <label for="password">Contraseña: </label>
         <input type="password" id="password" v-model="password">
       </div>
-      <button class="btn" @click='iniciarCorreo(email,password)'>Iniciar sesion</button>
-      <button class="btn" @click='registro(email,password)'>Registrarse</button>
+      <a class="btn" @click='iniciarCorreo(email,password)'>Iniciar sesion</a>
+      <a class="btn" @click='registro(email,password)'>Registrarse</a>
     </form>
 
     <p>Inicar sesión con:</p>
@@ -55,7 +55,6 @@ import firebase from '../db.js'
       })
       
     },
-
     
     methods: {
       login:function(){
@@ -75,7 +74,6 @@ import firebase from '../db.js'
           return this.user.loggedIn
       },
     }
-    
 }
 
 

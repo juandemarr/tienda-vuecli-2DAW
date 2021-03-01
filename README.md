@@ -1,6 +1,6 @@
 # repositorio-tienda
 
-En => https://juandemarr.github.io/tienda-vuecli/
+En => tienda-juegos-a5ff5.web.app
 
 ## Project setup
 ```

@@ -1,6 +1,7 @@
 .novprod{
     font-size:fontsize(sm);
-    
+    display:flex;
+    flex-direction:column;
     & h2{
         margin:5% 0 3%;
     }
@@ -30,8 +31,14 @@
                 flex-direction:column;
                 width:100%;
 
-                & > h5{
+                & h5{
                     cursor:pointer;
+                    font-size:fontsize(md);
+                    margin-bottom:.1rem;
+                }
+
+                & p{
+                    margin:0 0 .1rem;
                 }
             }
         & .modal-body{
@@ -75,18 +82,26 @@
                 height:15rem;
             }
             & img{
-                width:75%;
+                width:71%;
                 @include response(sm){
-                    width:70%;
+                    width:68%;
                 }
             }
             & .card-body{
                 & h5{
-                    font-size:fontsize(xs);
+                    font-size:fontsize(sm);
+                    margin-bottom:.1rem;
                 }
                 & a{
                     padding:0.1rem 0.3rem;
                     font-size:fontsize(xs);
+                }
+                & p{
+                    margin:0 0 .1rem;
+                    
+                    @include response(sm){
+                        font-size:fontsize(xs);
+                    }
                 }
                 
             }
@@ -100,6 +115,11 @@
         }
         
         
+    }
+
+    & .colorSpinner{
+        color:color(primary);
+        margin:5rem auto;
     }
    
 }

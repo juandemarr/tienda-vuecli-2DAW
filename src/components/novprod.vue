@@ -1,6 +1,6 @@
 <template lang="html">
 
-  <section class="novprod container-fluid container-md">
+  <section v-if="listaProductos!=''" class="novprod container-fluid container-md">
     <h2>Novedades</h2>
     <section class="container-fluid container-md cards">
       <div v-for="novedad in arrayNovedades"
@@ -9,7 +9,8 @@
         <img :src="novedad.src" class="card-img-top" :alt="novedad.nombre" data-toggle="modal" :data-target="novedad.target">
         <div class="card-body p-0">
           <h5 class="card-title" data-toggle="modal" :data-target="novedad.target">{{novedad.nombre}}</h5>
-          <a v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(novedad)">Añadir <i class="fas fa-shopping-cart"></i></a>
+          <p>{{novedad.precio}}€</p>
+          <button :disabled="deshabilitarBoton(novedad)" v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(novedad)">Añadir <i class="fas fa-shopping-cart"></i></button>
           <router-link to="/login" class="btn btn-primary" v-if="!authenticated">Añadir <i class="fas fa-shopping-cart"></i></router-link>
         </div>
 
@@ -25,6 +26,7 @@
               <div class="modal-body">
                 <img :src="novedad.src2" :alt="novedad.nombre">
                 <p>{{novedad.descripcion}}</p>
+                <p>En stock: {{novedad.stock}}</p>
               </div>
               <div class="modal-footer">
                 <a v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(novedad)">Añadir <i class="fas fa-shopping-cart"></i></a>
@@ -45,6 +47,7 @@
         <img :src="producto.src" class="card-img-top" :alt="producto.nombre" data-toggle="modal" :data-target="producto.target">
         <div class="card-body p-0">
           <h5 class="card-title" data-toggle="modal" :data-target="producto.target">{{producto.nombre}}</h5>
+          <p>{{producto.precio}}€</p>
           <a v-if="authenticated" class="btn btn-primary" @click="agregarCarrito(producto)">Añadir <i class="fas fa-shopping-cart"></i></a>
           <router-link to="/login" class="btn btn-primary" v-if="!authenticated">Añadir <i class="fas fa-shopping-cart"></i></router-link>
         </div>
@@ -75,12 +78,16 @@
     </section>
   </section>
 
+  <section v-else class="novprod container-fluid container-md">
+    <div class="spinner-grow colorSpinner" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </section>
 </template>
 
 <script lang="js">
 import {db} from '../db.js'
 import firebase from '../db.js'
-//import { eventBus } from '../event-bus.js' 
 
   export default  {
     name: 'novprod',
@@ -92,9 +99,10 @@ import firebase from '../db.js'
         if (user) {
           this.user.loggedIn = true;
           this.user.data = user;
-          // ...
+          this.$bind('listaCarrito',db.collection('listaCarrito').where("email","==",firebase.auth.currentUser ? firebase.auth.currentUser.email : ""))
         } else {
           this.user.loggedIn = false;
+          this.$bind('listaCarrito',db.collection('listaCarrito').where("email","==", ""))
         }
       });
     },
@@ -110,11 +118,6 @@ import firebase from '../db.js'
       }
     },
     methods: {
-      /* agregarCarrito:function(elemento){
-        this.listaCarrito.push(elemento);
-        eventBus.$emit('arrayCarrito', this.listaCarrito);
-      } */
-
       agregarCarrito:function(producto){
 
         if(this.listaCarrito.length==0){
@@ -150,9 +153,16 @@ import firebase from '../db.js'
           type:'success',
           text:'Se ha añadido un elemento al carrito'
         });
-      }
+      },
 
-      
+      deshabilitarBoton:function(elemento){
+        if(elemento.stock==0){
+          return true;
+        }else{
+          return false;
+        }
+        
+      }
 
     },
     computed: {
@@ -177,7 +187,7 @@ import firebase from '../db.js'
     },
     firestore:{
       listaProductos:db.collection('productos'),
-      listaCarrito:db.collection('listaCarrito')//.where("email","==",firebase.auth.currentUser ? firebase.auth.currentUser.email:"")
+      listaCarrito:db.collection('listaCarrito').where("email","==",firebase.auth.currentUser ? firebase.auth.currentUser.email : "")
     }
 }
 

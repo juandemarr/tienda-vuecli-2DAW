@@ -30,7 +30,6 @@ Vue.component(carrito);
 
 const routes = [
   { path: '/', component: novprod },
-  { path: '/productos', component: novprod },
   { path: '/login', component: login },
   { path: '/carrito', component: carrito }
 ]
