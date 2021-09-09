@@ -2,7 +2,9 @@
 
 Final project of Javascript, making the design and functioning of a videogame's shop website.
 
-Web framework: Vue CLI. Also using HTML5, CSS3, Javascript, Bootstrap and a non-relational database.
+Web framework: Vue CLI. 
+CSS framework: SASS
+Also using HTML5, CSS3, Javascript, Bootstrap and a non-relational database.
 
 In => https://tienda-juegos-a5ff5.web.app
 
